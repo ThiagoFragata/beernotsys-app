@@ -22,10 +22,20 @@ export const Subtitle = styled(RNText)`
   font-size: ${RFValue(16)}px;
 `
 export const Text = styled(RNText)`
-  color: ${theme.colors.subtitle};
+  color: ${theme.colors.title};
   font-weight: 400;
   font-size: ${RFValue(16)}px;
 `
-export const Strong = styled(Text)`
-  color: ${theme.colors.primary};
+
+export const Temperature = styled(RNText)`
+  color: ${theme.colors.subtitle};
+  font-weight: 500;
+  font-size: ${RFValue(32)}px;
+`
+export const LabelText = styled(Text)`
+  text-transform: uppercase;
+  color: ${theme.colors.subtitle};
+  font-weight: 400;
+  font-size: ${RFValue(14)}px;
+  margin-bottom: ${RFValue(8)}px;
 `

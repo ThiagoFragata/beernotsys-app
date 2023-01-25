@@ -1,16 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Modalize } from 'react-native-modalize';
+
 import { HomeImage } from '../../assets';
-import { Button } from '../../components/Button';
 import { Stack } from '../../styles/commonStyles';
 
+import { Button } from '../../components/Button';
 import * as styles from './styles';
+
 
 export function Home() {
   const modalizeRef = useRef<Modalize>(null);
   const navigation = useNavigation()
+
+  const [controlButton, setControl] = useState(false)
+
+  const stopSearch = () => {
+    setControl(true)
+  }
 
   const onOpen = () => {
     modalizeRef.current?.open();
@@ -46,7 +54,8 @@ export function Home() {
             </TouchableOpacity>
           </Stack>
 
-          <Button type='primary' title='Parar' onPress={onOpen} />
+          {!controlButton && < Button type='primary' title='Parar' onPress={stopSearch} />}
+
         </styles.ModalContent>
       </Modalize>
     </>

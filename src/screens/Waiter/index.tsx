@@ -25,11 +25,11 @@ export function Waiter() {
           <View>
             <styles.Text>Temperatura</styles.Text>
           </View>
-          <styles.Text>24°</styles.Text>
+          <styles.Temperature>24°</styles.Temperature>
         </Stack>
 
         <Stack direction='column' >
-          <styles.Text>Sugestão</styles.Text>
+          <styles.LabelText>Sugestão</styles.LabelText>
           <styles.Text>Servir outra bebida gelada!</styles.Text>
         </Stack>
       </Stack>
