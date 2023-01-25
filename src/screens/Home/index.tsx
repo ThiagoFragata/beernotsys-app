@@ -1,18 +1,54 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Modalize } from 'react-native-modalize';
 import { HomeImage } from '../../assets';
 import { Button } from '../../components/Button';
+import { Stack } from '../../styles/commonStyles';
 
-import { SafeContainer, Strong, Title } from './styles';
+import * as styles from './styles';
 
 export function Home() {
+  const modalizeRef = useRef<Modalize>(null);
+  const navigation = useNavigation()
+
+  const onOpen = () => {
+    modalizeRef.current?.open();
+  };
+
   return (
-    <SafeContainer>
-      <Title>
-        Por favor <Strong>conecte-se</Strong> com a garrafa!
-      </Title>
+    <>
+      <styles.SafeContainer>
+        <styles.Title>
+          Por favor <styles.Strong>conecte-se</styles.Strong> com a garrafa!
+        </styles.Title>
 
-      <HomeImage />
+        <HomeImage />
 
-      <Button type='primary' title='Conectar' />
-    </SafeContainer>)
+        <Button type='primary' title='Conectar' onPress={onOpen} />
+      </styles.SafeContainer>
+
+      <Modalize
+        ref={modalizeRef}
+        adjustToContentHeight
+        withHandle={true}
+      >
+        <styles.ModalContent>
+          <Stack direction='column'>
+            <styles.HeaderModal>Dispositivos encontrados</styles.HeaderModal>
+            <TouchableOpacity onPress={() => navigation.reset({
+              index: 0,
+              routes: [{ name: 'Waiter' }],
+            })}>
+              <styles.TextModal>
+                Garrafa 13d4
+              </styles.TextModal>
+            </TouchableOpacity>
+          </Stack>
+
+          <Button type='primary' title='Parar' onPress={onOpen} />
+        </styles.ModalContent>
+      </Modalize>
+    </>
+  )
 }

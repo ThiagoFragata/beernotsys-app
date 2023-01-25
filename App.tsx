@@ -1,8 +1,9 @@
+import 'react-native-gesture-handler';
 import React from 'react';
+import Routes from './src/routes/app.routes';
 
 import { StatusBar } from 'react-native';
 import { AppProvider } from './src/hooks';
-import Routes from './src/routes/app.routes';
 
 export default function App(): JSX.Element {
   return (

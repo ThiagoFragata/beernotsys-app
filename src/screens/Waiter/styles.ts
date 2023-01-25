@@ -29,16 +29,3 @@ export const Text = styled(RNText)`
 export const Strong = styled(Text)`
   color: ${theme.colors.primary};
 `
-
-interface StackProps {
-  align?: 'flex-start' | 'flex-end' | 'center';
-  justify?: 'flex-start' | 'flex-end' | 'space-between' | 'center';
-  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
-}
-
-export const Stack = styled(View) <StackProps>`
-  width: 100%;
-  align-items: ${({ align }) => align ? align : 'flex-start'};
-  justify-content: ${({ justify }) => justify ? justify : 'flex-start'};
-  flex-direction: ${({ direction }) => direction ? direction : 'row'};;
-`

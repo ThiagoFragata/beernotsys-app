@@ -12,7 +12,6 @@ const Routes = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName="Waiter"
         screenOptions={{
           headerShown: false,
         }}
