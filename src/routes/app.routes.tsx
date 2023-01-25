@@ -12,12 +12,13 @@ const Routes = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName="SignIn"
+        initialRouteName="Waiter"
         screenOptions={{
           headerShown: false,
         }}
       >
         <Stack.Screen name="Home" component={Route.Home} />
+        <Stack.Screen name="Waiter" component={Route.Waiter} />
       </Stack.Navigator>
     </NavigationContainer>
   )
