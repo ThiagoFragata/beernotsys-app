@@ -2,9 +2,9 @@ import styled from "styled-components";
 import theme from '../../styles/theme';
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
 import { RFValue } from "react-native-responsive-fontsize";
-import { View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 export const SafeContainer = styled(SafeAreaView)`
   flex: 1;
@@ -24,8 +24,8 @@ export const Title = styled(Text)`
 export const Strong = styled(Text)`
   color: ${theme.colors.primary};
 `
-export const ModalContent = styled(View)`
-  justify-content: space-between;
+export const ModalContent = styled(ScrollView)`
+  /* justify-content: space-between; */
 
   height: ${RFValue(400)}px;
 

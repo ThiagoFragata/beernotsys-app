@@ -1,46 +1,87 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Image, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { Clock } from '../../assets'
-import { Button } from '../../components/Button';
+import { Bottle } from '../../assets'
+import api from '../../services/axios';
 import { Stack } from '../../styles/commonStyles';
 
 import * as styles from './styles';
 
+const INTERVAL_TIME = 5000;
+
+interface TemperatureProps {
+  Temperature: string;
+  Time: string;
+  id: string;
+}
+
 export function Waiter() {
-  const navigation = useNavigation()
+  const [loading, setLoading] = useState(true);
+  const [suggestion, setSuggestion] = useState("");
+  const [temperature, setTemperature] = useState<TemperatureProps>({
+    Temperature: "?",
+    Time: "?",
+    id: "?",
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      api
+        .get("/Temperatura/Receber")
+        .then((response) => {
+          setLoading(true);
+          setTemperature(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, INTERVAL_TIME);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const temp = parseFloat(temperature.Temperature)
+
+    if (temp < 10) {
+      setSuggestion("Cerveja estupidamente gelada, famosa canela de pedreiro, estalando!")
+    } else if (temp > 20 && temp < 30) {
+      setSuggestion("Cerveja está esquentando, acho que está na hora de oferecer outra cerveja!")
+    } else {
+      setSuggestion("Cerveja quente ou possivelmente vazia, ta fazendo chá?")
+    }
+  }, [temperature.Temperature])
 
   return (
     <styles.SafeContainer>
-      <Stack direction='column'>
-        <styles.Title>Status Garrafa</styles.Title>
-        <styles.Subtitle>Garrafa 13d4</styles.Subtitle>
-      </Stack>
+      {!loading ?
+        <KeyboardAwareScrollView>
+          <Stack direction='column'>
+            <styles.Title>Status Garrafa</styles.Title>
+            <styles.Subtitle>{temperature.id}</styles.Subtitle>
+          </Stack>
 
-      <Image source={Clock} />
+          <Image source={Bottle} />
 
-      <Stack direction='column' >
-        <Stack justify='space-between' >
-          <View>
-            <styles.Text>Temperatura</styles.Text>
-          </View>
-          <styles.Temperature>24°</styles.Temperature>
-        </Stack>
+          <Stack direction='column'>
+            <Stack align='center' justify='space-between' >
+              <View>
+                <styles.Text>Temperatura</styles.Text>
+              </View>
+              <styles.Temperature>{temperature.Temperature}°C</styles.Temperature>
+            </Stack>
 
-        <Stack direction='column' >
-          <styles.LabelText>Sugestão</styles.LabelText>
-          <styles.Text>Servir outra bebida gelada!</styles.Text>
-        </Stack>
-      </Stack>
-
-      <Button
-        type='secondary'
-        title='Desconectar'
-        onPress={() => navigation.reset({
-          index: 0,
-          routes: [{ name: 'Home' }],
-        })} />
-    </styles.SafeContainer>
+            <Stack direction='column' >
+              <styles.LabelText>Sugestão</styles.LabelText>
+              <styles.Text>{suggestion}</styles.Text>
+            </Stack>
+          </Stack>
+        </KeyboardAwareScrollView> :
+        <ActivityIndicator size='large' />
+      }
+    </styles.SafeContainer >
   )
 }

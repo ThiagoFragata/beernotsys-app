@@ -15,4 +15,5 @@ export const Stack = styled(View) <StackProps>`
   flex-direction: ${({ direction }) => direction ? direction : 'row'};
 
   padding: ${({ padding }) => padding ? padding : '0'};
+  margin-bottom: 20px;
 `
